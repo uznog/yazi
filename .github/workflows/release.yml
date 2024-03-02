@@ -51,7 +51,7 @@ jobs:
         if: endsWith(matrix.target, '-musl')
         run: |
           sudo apt-get update
-          sudo apt-get install -yq musl-tools
+          sudo apt-get install -yq musl-tools musl-dev
 
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
