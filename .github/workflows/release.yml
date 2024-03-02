@@ -54,12 +54,18 @@ jobs:
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
 
+      - name: Set CC variable for aarch64 targets
+        if: startsWith(matrix.target, 'aarch64-unknown-linux')
+        run: echo "CC=aarch64-linux-gnu-gcc" >> "$GITHUB_ENV"
+
       - name: Build
         env:
           YAZI_GEN_COMPLETIONS: true
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: /usr/bin/aarch64-linux-gnu-gcc
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER: /usr/bin/aarch64-linux-gnu-gcc
-        run: cargo build --release --locked --target ${{ matrix.target }}
+        run: |
+          echo $CC
+          cargo build --release --locked --target ${{ matrix.target }}
 
       - name: Build snap
         if: matrix.target == 'x86_64-unknown-linux-gnu'
