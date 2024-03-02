@@ -40,7 +40,7 @@ jobs:
         run: rustup target add ${{ matrix.target }}
 
       - name: Install gcc-aarch64-linux-gnu
-        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        if: startsWith(matrix.target, 'aarch64-unknown-linux')
         run: |
           sudo apt-get update
           sudo apt-get install -yq gcc-aarch64-linux-gnu
@@ -58,6 +58,7 @@ jobs:
         env:
           YAZI_GEN_COMPLETIONS: true
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: /usr/bin/aarch64-linux-gnu-gcc
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER: /usr/bin/aarch64-linux-gnu-gcc
         run: cargo build --release --locked --target ${{ matrix.target }}
 
       - name: Build snap
