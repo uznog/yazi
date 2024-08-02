@@ -152,7 +152,7 @@ jobs:
   dummy:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello, nightly!" > yazi-dummy.zip
+      - run: echo "Hello, nightly v2!" > yazi-dummy.zip
       - uses: actions/upload-artifact@v4
         with:
           name: yazi-dummy.zip
