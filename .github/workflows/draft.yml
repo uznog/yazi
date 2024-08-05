@@ -181,3 +181,6 @@ jobs:
             yazi-*.zip
             yazi-*.snap
           generate_release_notes: true
+          body: |
+            From commit: ${{ truncate(github.sha, 7)}}
+            Generated on: $(date -u +"%Y-%m-%d %H:%M:%S") UTC
