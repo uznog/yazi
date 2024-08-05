@@ -170,6 +170,13 @@ jobs:
           merge-multiple: true
 
       - run: echo "SHORT_SHA=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
+      - run: |
+          GITHUB_SHA_SHORT=${GITHUB_SHA:0:8}
+          UTC_DATE=$(date -u +"%Y-%m-%d %H:%M")
+          echo 'RELEASE_NOTE<<EOF'
+          echo "From commit: ${GITHUB_SHA_SHORT}" >> $GITHUB_ENV
+          echo "Generated on: ${UTC_DATE} UTC" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Nightly
         uses: softprops/action-gh-release@v1
@@ -181,6 +188,4 @@ jobs:
             yazi-*.zip
             yazi-*.snap
           generate_release_notes: true
-          body: |
-            From commit: ${SHORT_SHA}
-            Generated on: $(date -u +"%Y-%m-%d %H:%M:%S") UTC
+          body: ${{ env. RELEASE_NOTE }}
