@@ -169,7 +169,7 @@ jobs:
         with:
           merge-multiple: true
 
-      - run: echo "CURRENT_DATE=$(date -u +"%Y%m%d-%H%M")" >> $GITHUB_ENV
+      - run: echo "SHORT_SHA=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
 
       - name: Nightly
         uses: softprops/action-gh-release@v1
@@ -182,5 +182,5 @@ jobs:
             yazi-*.snap
           generate_release_notes: true
           body: |
-            From commit: ${{ truncate(github.sha, 7)}}
+            From commit: ${SHORT_SHA}
             Generated on: $(date -u +"%Y-%m-%d %H:%M:%S") UTC
